@@ -1,0 +1,65 @@
+```html
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>에이베러 2026.1Q 평가</title>
+<style>body{font-family:sans-serif;max-width:800px;margin:50px auto;padding:20px}
+.section{border:1px solid #ddd;margin:20px 0;padding:20px;border-radius:8px;background:#fafafa}
+.criteria{background:#e3f2fd;padding:10px;border-radius:5px;font-size:0.9em;margin:10px 0}
+input[type=range]{width:100%;height:8px}
+.score-display{font-size:1.5em;color:#1976d2;font-weight:bold}
+.total-score{background:#e8f5e8;padding:20px;text-align:center;border-radius:8px;margin:20px 0}
+button{padding:12px 30px;background:#2563eb;color:white;border:none;border-radius:6px;font-size:16px;cursor:pointer}
+button:hover{background:#1d4ed8}</style></head><body>
+<h1>🧑‍💼 에이베러 2026.1Q 개인평가</h1>
+<p>평가자: <input type="text" id="evaluator" style="border:1px solid #ddd;padding:8px;width:200px" required></p>
+<p>대상자: <input type="text" id="target" style="border:1px solid #ddd;padding:8px;width:200px" required></p>
+
+<form id="form">
+<div class="section">
+<h3>1. 기본 업무 수행력 (25%)</h3>
+<p>본인에게 부여된 R&R(AOR)을 책임감 있게 완수했는가?</p>
+<div class="criteria">9~10: R&R 100%+개선 | 7~8: 90%+ | 5~6: 80% | 4↓: 70%↓</div>
+<label>점수: <span id="s1" class="score-display">5</span>/10</label><br>
+<input type="range" id="r1" min="1" max="10" value="5"><br><br>
+<textarea id="e1" placeholder="근거 작성 (50자 이상 필수)" rows="3" required style="width:100%;padding:10px"></textarea>
+</div>
+
+<div class="section">
+<h3>2. 문제 정의 및 해결 (25%)</h3>
+<p>문제의 원인을 정확히 정의하고 실행 가능한 해법 제시했는가?</p>
+<div class="criteria">9~10: 데이터원인+실행제안 | 7~8: 합리적분석 | 5~6: 피상적 | 4↓: 불명확</div>
+<label>점수: <span id="s2" class="score-display">5</span>/10</label><br>
+<input type="range" id="r2" min="1" max="10" value="5"><br><br>
+<textarea id="e2" placeholder="근거 작성" rows="3" required style="width:100%;padding:10px"></textarea>
+</div>
+
+<div class="section">
+<h3>3. 실행력 및 결과 기여 (30%)</h3>
+<p>계획을 끝까지 실행하고 팀 성과에 실질적 영향 줬는가?</p>
+<div class="criteria">9~10: 목표초과+KPI개선 | 7~8: 목표달성 | 5~6: 임팩트제한 | 4↓: 미완료</div>
+<label>점수: <span id="s3" class="score-display">5</span>/10</label><br>
+<input type="range" id="r3" min="1" max="10" value="5"><br><br>
+<textarea id="e3" placeholder="근거 작성" rows="3" required style="width:100%;padding:10px"></textarea>
+</div>
+
+<div class="section">
+<h3>4. 협업 태도 및 성장 (20%)</h3>
+<p>원활한 협업과 자기 성장 노력 있었는가?</p>
+<div class="criteria">9~10: 협업리드+지속학습 | 7~8: 원활+개선 | 5~6: 수동적 | 4↓: 문제발생</div>
+<label>점수: <span id="s4" class="score-display">5</span>/10</label><br>
+<input type="range" id="r4" min="1" max="10" value="5"><br><br>
+<textarea id="e4" placeholder="근거 작성" rows="3" required style="width:100%;padding:10px"></textarea>
+</div>
+
+<div class="total-score">
+<h2>📊 최종 총점: <span id="total">0.0</span>/10점</h2>
+<button type="submit">✅ 평가 제출하기</button>
+</div>
+</form>
+
+<script>
+const sliders=['r1','r2','r3','r4'],displays=['s1','s2','s3','s4'],weights=[0.25,0.25,0.3,0.2];
+sliders.forEach((s,i)=>{document.getElementById(s).oninput=()=>{document.getElementById(displays[i]).textContent=document.getElementById(s).value;updateTotal()}});
+function updateTotal(){let t=0;sliders.forEach((s,i)=>t+=parseInt(document.getElementById(s).value)*weights[i]);document.getElementById('total').textContent=t.toFixed(1)}
+document.getElementById('form').onsubmit=e=>{e.preventDefault();let data=`평가자:${document.getElementById('evaluator').value}\n대상자:${document.getElementById('target').value}\n총점:${document.getElementById('total').textContent}\n\n`;sliders.forEach((s,i)=>{data+=`항목${i+1}:${document.getElementById(displays[i]).textContent}점\n근거:\n${document.getElementById('e'+(i+1)).value}\n\n`});navigator.clipboard.writeText(data).then(()=>alert('✅ 평가 결과가 클립보드에 복사됐습니다!\n슬랙이나 메모장에 붙여넣으세요!'))}
+</script></body></html>
+```
